@@ -1,0 +1,144 @@
+//
+//  Utils.swift
+//  PhotoPartyUpload
+//
+//  Created by iT Gurus Software on 12/04/18.
+//  Copyright © 2018 iT Gurus Software. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+class Utils
+{
+    static let sharedInstance = Utils()
+    var alert : UIAlertController?
+    private var backgroundSession : URLSession?
+    
+    private init(){
+        let configuration = URLSessionConfiguration.default
+        self.backgroundSession = URLSession(configuration: configuration)
+    }
+    
+    func getWiFiAddress() -> String? {
+        var address : String?
+        
+        // Get list of all interfaces on the local machine:
+        var ifaddr : UnsafeMutablePointer<ifaddrs>?
+        guard getifaddrs(&ifaddr) == 0 else { return nil }
+        guard let firstAddr = ifaddr else { return nil }
+        
+        // For each interface ...
+        for ifptr in sequence(first: firstAddr, next: { $0.pointee.ifa_next }) {
+            let interface = ifptr.pointee
+            
+            // Check for IPv4 or IPv6 interface:
+            let addrFamily = interface.ifa_addr.pointee.sa_family
+            if addrFamily == UInt8(AF_INET) || addrFamily == UInt8(AF_INET6) {
+                
+                // Check interface name:
+                let name = String(cString: interface.ifa_name)
+                if  name == "en0" {
+                    
+                    // Convert interface address to a human readable string:
+                    var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+                    getnameinfo(interface.ifa_addr, socklen_t(interface.ifa_addr.pointee.sa_len),
+                                &hostname, socklen_t(hostname.count),
+                                nil, socklen_t(0), NI_NUMERICHOST)
+                    address = String(cString: hostname)
+                }
+            }
+        }
+        freeifaddrs(ifaddr)
+        
+        return address
+    }
+    
+    func showSearchAlert(topController : UIViewController, title: String?,messsage : String?, cancelButtonTitle : String)
+    {
+        if alert != nil {
+            self.alert?.dismiss(animated: true, completion: {
+                print("Alert removed")
+                self.alert = UIAlertController(title: title, message: messsage, preferredStyle: .alert)
+                self.alert?.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: {_ in
+                    NSLog("Cancel Search")
+                }))
+                topController.present(self.alert!, animated: true, completion: nil)
+            })
+        }
+        else
+        {
+            alert = UIAlertController(title: title, message: messsage, preferredStyle: .alert)
+            alert?.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: {_ in
+                NSLog("Cancel Search")
+            }))
+            topController.present(alert!, animated: true, completion: nil)
+        }
+    }
+    
+    
+    func removeAlert() {
+        self.alert?.dismiss(animated: true, completion: {
+            print("Alert removed")
+        })
+    }
+    
+    
+    func showAdminChoice(helperName : String, topController : UIViewController)
+    {
+        
+        if alert != nil {
+            self.alert?.dismiss(animated: true, completion: {
+                print("Alert removed")
+            })
+        }
+        
+        let title = Constant.HelperSelectionConstant.title + helperName
+
+        
+        alert = UIAlertController(title: title, message: Constant.HelperSelectionConstant.message, preferredStyle: .alert)
+        
+        alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.firstChoice, style: .default, handler: {_ in
+            NSLog("First Choice")
+        }))
+        
+        alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.secondChoice, style: .default, handler: {_ in
+            NSLog("Second Choice")
+        }))
+        
+        alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.cancelButtonTitle, style: .cancel, handler: {_ in
+            NSLog("Cancel Choice")
+        }))
+        
+        topController.present(alert!, animated: true, completion: nil)
+    }
+    
+    func getBackgroundSession() -> URLSession? {
+        if self.backgroundSession != nil
+        { return self.backgroundSession }
+        else
+        {
+            return nil
+        }
+    }
+    
+     func getDocumentPath() -> URL {
+        let url =  NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        return URL(fileURLWithPath: url)
+    }
+     func isFilePresent(url: URL) -> Bool{
+        return FileManager.default.fileExists(atPath: url.path)
+    }
+    
+     func createFolder(folderName : URL) -> Bool
+    {
+            do {
+                try FileManager.default.createDirectory(atPath: folderName.path, withIntermediateDirectories: true, attributes: nil)
+                return true
+            } catch let error as NSError {
+                NSLog("Unable to create directory \(error.debugDescription)")
+                return false
+            }
+    }
+    
+}
