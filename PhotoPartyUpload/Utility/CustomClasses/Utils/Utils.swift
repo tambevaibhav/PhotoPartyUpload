@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+typealias alertCompletionBlock = (Int) -> Void
+
 class Utils
 {
     static let sharedInstance = Utils()
@@ -56,17 +58,8 @@ class Utils
     
     func showSearchAlert(topController : UIViewController, title: String?,messsage : String?, cancelButtonTitle : String)
     {
-        if alert != nil {
-            self.alert?.dismiss(animated: true, completion: {
-                print("Alert removed")
-                self.alert = UIAlertController(title: title, message: messsage, preferredStyle: .alert)
-                self.alert?.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: {_ in
-                    NSLog("Cancel Search")
-                }))
-                topController.present(self.alert!, animated: true, completion: nil)
-            })
-        }
-        else
+        
+        func showAlertController()
         {
             alert = UIAlertController(title: title, message: messsage, preferredStyle: .alert)
             alert?.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: {_ in
@@ -74,7 +67,24 @@ class Utils
             }))
             topController.present(alert!, animated: true, completion: nil)
         }
+        
+        
+        if alert != nil
+        {
+            self.alert?.dismiss(animated: true, completion: {
+                print("Alert removed")
+              showAlertController()
+            })
+        }
+        else
+        {
+            showAlertController()
+        }
+        
+        
     }
+    
+    
     
     
     func removeAlert() {
@@ -84,33 +94,45 @@ class Utils
     }
     
     
-    func showAdminChoice(helperName : String, topController : UIViewController)
+    func showAdminChoice(helperName : String, topController : UIViewController, callBack :@escaping alertCompletionBlock)
     {
+        
+        func showAlertViewController()
+        {
+            let title = Constant.HelperSelectionConstant.title + helperName
+            alert = UIAlertController(title: title, message: Constant.HelperSelectionConstant.message, preferredStyle: .alert)
+            
+            alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.firstChoice, style: .default, handler:
+                {_ in
+                    NSLog("Use it")
+                    callBack(1)
+            }))
+            
+            alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.secondChoice, style: .default, handler: {_ in
+                NSLog("Second Choice")
+                callBack(2)
+            }))
+            
+            alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.cancelButtonTitle, style: .cancel, handler: {_ in
+                NSLog("Cancel Choice")
+                callBack(3)
+            }))
+            
+            topController.present(alert!, animated: true, completion: nil)
+        }
+        
+        
         
         if alert != nil {
             self.alert?.dismiss(animated: true, completion: {
                 print("Alert removed")
+                showAlertViewController()
             })
         }
-        
-        let title = Constant.HelperSelectionConstant.title + helperName
-
-        
-        alert = UIAlertController(title: title, message: Constant.HelperSelectionConstant.message, preferredStyle: .alert)
-        
-        alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.firstChoice, style: .default, handler: {_ in
-            NSLog("First Choice")
-        }))
-        
-        alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.secondChoice, style: .default, handler: {_ in
-            NSLog("Second Choice")
-        }))
-        
-        alert?.addAction(UIAlertAction(title: Constant.HelperSelectionConstant.cancelButtonTitle, style: .cancel, handler: {_ in
-            NSLog("Cancel Choice")
-        }))
-        
-        topController.present(alert!, animated: true, completion: nil)
+        else
+        {
+            showAlertViewController()
+        }
     }
     
     func getBackgroundSession() -> URLSession? {

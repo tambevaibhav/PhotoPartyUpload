@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class MainViewModel : MainViewProtocol
 {
@@ -18,7 +19,10 @@ class MainViewModel : MainViewProtocol
     
     var showNoHelperFoundAlert : ((MainViewProtocol) -> ())?
     
-    var connectionStatus: ConnectionStatus {
+     var connectionImageArray = [UIImage]()
+    
+    var connectionStatus: ConnectionStatus
+    {
         didSet {
             self.statusDidChange?(self)
         }
@@ -36,8 +40,6 @@ class MainViewModel : MainViewProtocol
             self.connectionStatus = .searching
             self.showSearchAlert?(self)
             HelperDetector.sharedInstance.getHelper { (result) in
-                NSLog("In Helper Detection")
-                
                 if result == true
                 {
                     self.showChoiceAlert?(self)
@@ -51,21 +53,21 @@ class MainViewModel : MainViewProtocol
         else
         {
             NSLog("Manual Search")
-
         }
-        
-        
     }
     
     required init(connectionStatus : ConnectionStatus)
     {
         self.connectionStatus = connectionStatus
-    }
-    
-    
-    
-    func getHelperUrl()
-    {
-        
+
+        for i in 0...22
+        {
+            let imageName = String(format: "connection_search00%02d",i)
+            let path = Bundle.main.path(forResource: imageName, ofType: "png")
+            if let image = UIImage(named: path!)
+            {
+                connectionImageArray.append(image)
+            }
+        }
     }
 }

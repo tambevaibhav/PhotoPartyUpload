@@ -32,6 +32,37 @@ class HelperDetector : NSObject
     {
         self.callBack = callBack
         
+        if let helperUrl = UserDefaults.standard.value(forKey: "helperUrl") as? String
+        {
+            let pingQuery = String(format: "%@/%@", helperUrl,Constant.HelperXmlTag.serverPingQuery)
+            
+            let operation = HeleprDetectionOperation(url: URL(string: pingQuery)!)
+            { (result , helper) in
+                
+                if result == true
+                {
+                    let parser = helper?.parser
+                    parser?.delegate = self
+                    parser?.parse()
+                }
+                else
+                {
+                        self.getHelpersByAPI()
+                }
+                
+            }
+            helperQueue.addOperation(operation)
+        }
+        else
+        {
+            getHelpersByAPI()
+        }
+        
+        
+    }
+    
+    private func getHelpersByAPI()
+    {
         guard let addr = getWiFiAddress() else { self.callBack!(false); return }
         
         let soapMessage = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Body><GetLocalIPByExternalIP xmlns=\"http://tempuri.org/\"><externalIPAddress>\(addr)</externalIPAddress></GetLocalIPByExternalIP></SOAP-ENV:Body></SOAP-ENV:Envelope>"
@@ -45,7 +76,7 @@ class HelperDetector : NSObject
         request.httpBody = soapMessage.data(using: .utf8, allowLossyConversion: false)
         request.httpMethod = "POST"
         request.timeoutInterval = 30
-
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error
             {
@@ -62,6 +93,8 @@ class HelperDetector : NSObject
         }
         task.resume()
     }
+    
+    
     
     private func getWiFiAddress() -> String? {
         var address : String?

@@ -9,13 +9,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PhotoPartyUpload/ViewModel/MainViewModel/MainViewModel.swift"
-            timestampString = "551350929.32653"
+            filePath = "PhotoPartyUpload/Presenter/Main/MainViewController.swift"
+            timestampString = "551865275.416829"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "startUpThings()"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "viewModel"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhotoPartyUpload/Utility/XMLParser/HelperDetectorXMLParser/HelperDetectorXMLParser.swift"
+            timestampString = "551865386.573572"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "parser(_:parseErrorOccurred:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,14 +41,110 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PhotoPartyUpload/Presenter/Main/MainViewController.swift"
-            timestampString = "551350929.32662"
+            filePath = "PhotoPartyUpload/Utility/XMLParser/HelperDetectorXMLParser/HelperDetectorXMLParser.swift"
+            timestampString = "551865386.57386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "updateStatus()"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "parser(_:didEndElement:namespaceURI:qualifiedName:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhotoPartyUpload/Utility/CustomClasses/Utils/Utils.swift"
+            timestampString = "551876397.492237"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "showSearchAlert(topController:title:messsage:cancelButtonTitle:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhotoPartyUpload/Utility/CustomClasses/Utils/Utils.swift"
+            timestampString = "551876397.49279"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "removeAlert()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PhotoPartyUpload.Utils.removeAlert() -&gt; ()"
+                  moduleName = "PhotoPartyUpload"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HJW140/Documents/Demos/PPU/PhotoPartyUpload/PhotoPartyUpload/Utility/CustomClasses/Utils/Utils.swift"
+                  timestampString = "551876379.663079"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in PhotoPartyUpload.Utils.removeAlert() -&gt; ()"
+                  moduleName = "PhotoPartyUpload"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HJW140/Documents/Demos/PPU/PhotoPartyUpload/PhotoPartyUpload/Utility/CustomClasses/Utils/Utils.swift"
+                  timestampString = "551876379.6658731"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhotoPartyUpload/Utility/CustomClasses/Utils/Utils.swift"
+            timestampString = "551876397.493129"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "showSearchAlert(topController:title:messsage:cancelButtonTitle:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhotoPartyUpload/Utility/CustomClasses/Utils/Utils.swift"
+            timestampString = "551876397.493448"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "showAlertController()"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

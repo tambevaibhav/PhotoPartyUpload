@@ -198,7 +198,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="albumTitleImaView" destination="TJ0-yb-N9D" id="3yP-in-1hv"/>
+                        <outlet property="albumTitleImageView" destination="TJ0-yb-N9D" id="oqm-JT-P8x"/>
                         <outlet property="albumTitleLabel" destination="fZJ-Fs-6m2" id="mwV-bT-TDk"/>
                         <outlet property="albumView" destination="gdc-aE-Zx4" id="5II-ok-FmW"/>
                         <outlet property="backgroundImageView" destination="kh0-jy-lxQ" id="H7h-5m-MNP"/>

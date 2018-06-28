@@ -10,17 +10,17 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    // MARK: - Outlets
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var albumView: UIView!
-    @IBOutlet weak var albumTitleImaView: UIImageView!
+    @IBOutlet weak var albumTitleImageView: UIImageView!
     @IBOutlet weak var albumTitleLabel: UILabel!
     @IBOutlet weak var thumbnailBackView: UIView!
     @IBOutlet weak var brandingImageView: UIImageView!
     @IBOutlet weak var connectionImageView: UIImageView!
     
+   // MARK: - View Model
     
-    
-
     var viewModel : MainViewProtocol? {
         didSet{
             self.viewModel!.statusDidChange = {[unowned self] viewModel in
@@ -38,24 +38,34 @@ class MainViewController: UIViewController {
             }
             
             self.viewModel?.showChoiceAlert = { [unowned self] viewModel in
-                self.viewModel?.connectionStatus = .active
-
-                DispatchQueue.main.async {
-
-                  Utils.sharedInstance.showAdminChoice(helperName: HelperListModel.sharedList.helperList[0].name, topController: self)
+                DispatchQueue.main.async
+                {
+                    Utils.sharedInstance.showAdminChoice(helperName: HelperListModel.sharedList.helperList[0].name, topController: self, callBack: {
+                        result in
+                        if result == 1
+                        {
+                            UserDefaults.standard.set(HelperListModel.sharedList.helperList[0].url, forKey: "helperUrl")
+                            self.viewModel?.connectionStatus = .active
+                        }
+                        
+                    })
                 }
             }
         }
     }
     
-    
-    override func viewDidLoad() {
+ 
+  // MARK: View Life Cycle
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         self.viewModel = MainViewModel(connectionStatus: .off)
+        setUpUI()
         // Do any additional setup after loading the view.
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool)
+    {
         self.viewModel?.startUpThings()
 
     }
@@ -65,12 +75,29 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func setUpUI()
+    {
+       if UserSettings.sharedInstance.getUserSettings()?.isAlbumMode == true
+       {
+        albumView.isHidden = false
+        albumTitleLabel.isHidden = false
+        albumTitleImageView.isHidden = false
+       }
+        else
+       {
+        albumView.isHidden = true
+        albumTitleLabel.isHidden = true
+        albumTitleImageView.isHidden = true
+        }
+    }
     
+   // MARK: Other Methods
     func updateStatus()
     {
         self.connectionImageView.stopAnimating()
         
-        switch self.viewModel!.connectionStatus  {
+        switch self.viewModel!.connectionStatus
+        {
         case .on:
             self.connectionImageView.image = UIImage(named: "Connection_on")
         case .off:
@@ -78,27 +105,16 @@ class MainViewController: UIViewController {
         case .active:
             self.connectionImageView.image = UIImage(named: "Connection_active")
         case .searching:
-            var imageArray = [UIImage]()
-            
-            for i in 0...22
-            {
-                let imageName = String(format: "connection_search00%02d",i)
-                let path = Bundle.main.path(forResource: imageName, ofType: "png")
-                if let image = UIImage(named: path!)
-                {
-                    imageArray.append(image)
-                }
-            }
-            
-            self.connectionImageView.animationImages = imageArray
+            self.connectionImageView.animationImages = self.viewModel!.connectionImageArray
             self.connectionImageView.animationDuration = 1.0
             self.connectionImageView.startAnimating()
         }
     }
 
-    
+       // MARK: Button Actions
     @IBAction func viewModeButtonAction(_ sender: Any)
     {
+        
     }
    
 
