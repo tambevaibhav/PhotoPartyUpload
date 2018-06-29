@@ -16,6 +16,7 @@ extension DownloadManager : XMLParserDelegate
         if(elementName == Constant.XMLTag.arrayOfString)
         {
             serverImageList = [String]()
+            newImageList = [String]()
         }
         self.elementName = elementName
     }
@@ -24,7 +25,11 @@ extension DownloadManager : XMLParserDelegate
     {
         if(elementName == Constant.XMLTag.string)
         {
-            serverImageList!.append(string)
+            newImageList!.append(string)
+            if let originalName = Utils.sharedInstance.removeFileStamp(fileName: string)
+            {
+                serverImageList?.append(originalName)
+            }
         }
     }
     
@@ -55,7 +60,7 @@ extension DownloadManager : XMLParserDelegate
         {
             for image in oldImageList!
             {
-                if(!serverImageList!.contains(image))
+                if(!newImageList!.contains(image))
                 {
                     isImagesDeleted = true
                     // delete file
@@ -67,8 +72,8 @@ extension DownloadManager : XMLParserDelegate
             }
         }
         
-        oldImageList = serverImageList
-        // Start downloading
+        oldImageList = newImageList
+        downloadThumbnails()
     }
     
 }

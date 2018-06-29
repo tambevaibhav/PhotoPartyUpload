@@ -44,6 +44,7 @@
 		26A7450320E60BC500C11B4A /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A7450220E60BC500C11B4A /* DownloadManager.swift */; };
 		26A7450620E6179A00C11B4A /* GetImageListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A7450520E6179A00C11B4A /* GetImageListParser.swift */; };
 		26A7450920E61B1600C11B4A /* PartyImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A7450820E61B1600C11B4A /* PartyImageModel.swift */; };
+		26A7450B20E64D6000C11B4A /* ImageDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A7450A20E64D6000C11B4A /* ImageDownloadOperation.swift */; };
 		26B33DA6207F682B004CA8BD /* HelperDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B33DA5207F682B004CA8BD /* HelperDetector.swift */; };
 		26B33DA9207F7251004CA8BD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B33DA8207F7251004CA8BD /* Utils.swift */; };
 		26B33DAC207F77D4004CA8BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B33DAB207F77D4004CA8BD /* Constants.swift */; };
@@ -92,6 +93,7 @@
 		26A7450220E60BC500C11B4A /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		26A7450520E6179A00C11B4A /* GetImageListParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetImageListParser.swift; sourceTree = "<group>"; };
 		26A7450820E61B1600C11B4A /* PartyImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyImageModel.swift; sourceTree = "<group>"; };
+		26A7450A20E64D6000C11B4A /* ImageDownloadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadOperation.swift; sourceTree = "<group>"; };
 		26B33DA5207F682B004CA8BD /* HelperDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperDetector.swift; sourceTree = "<group>"; };
 		26B33DA8207F7251004CA8BD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		26B33DAB207F77D4004CA8BD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				26A7450220E60BC500C11B4A /* DownloadManager.swift */,
+				26A7450A20E64D6000C11B4A /* ImageDownloadOperation.swift */,
 			);
 			path = DownloadManager;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				26D8426A20D8E35100DF9EE7 /* HeleprDetectionOperation.swift in Sources */,
 				26833098202D768A005D0512 /* AppDelegate.swift in Sources */,
 				26833093202D7674005D0512 /* PhotoPartyUpload.xcdatamodeld in Sources */,
+				26A7450B20E64D6000C11B4A /* ImageDownloadOperation.swift in Sources */,
 				2638778620DA6870003A79AC /* UserSettings.swift in Sources */,
 				2638778920DA68CF003A79AC /* UserSettingsModel.swift in Sources */,
 				2638837320D0F93C00D3D9B1 /* HelperModel.swift in Sources */,

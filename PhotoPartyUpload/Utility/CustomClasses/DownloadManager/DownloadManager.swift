@@ -15,7 +15,11 @@ class DownloadManager : NSObject
      var downloadTimer : Timer?
      var serverImageList : [String]?
      var oldImageList : [String]?
+     var newImageList : [String]?
      var elementName : String?
+     var downloadImageOperationQueue : OperationQueue?
+     var downloadVideoOperationQueue : OperationQueue?
+
    
        // MARK: - Private Constructor
     private override init()
@@ -69,5 +73,54 @@ class DownloadManager : NSObject
     }
     
     
+    
+    func downloadThumbnails()
+    {
+        downloadImageOperationQueue = OperationQueue()
+        downloadImageOperationQueue?.name = "ImageDownload"
+        
+        for imageName in serverImageList!
+        {
+            
+            
+            let operation1 = ImageDownloadOperation(imageName: imageName, resolution: ImageResolution.small) { (result) in
+                if result == true
+                {
+                    print("small operation completed \(imageName)")
+                }
+                else
+                {
+                    print("failed small operation completed \(imageName)")
+
+                }
+            }
+            let operation2 = ImageDownloadOperation(imageName: imageName, resolution: ImageResolution.medium) { (result) in
+                if result == true
+                {
+                    print("medium operation completed \(imageName)")
+                }
+                else
+                {
+                    print("failed medium operation completed \(imageName)")
+                    
+                }
+            }
+            let operation3 = ImageDownloadOperation(imageName: imageName, resolution: ImageResolution.large) { (result) in
+                if result == true
+                {
+                    print("large operation completed \(imageName)")
+                }
+                else
+                {
+                    print("failed large operation completed \(imageName)")
+                    
+                }
+            }
+            
+            downloadImageOperationQueue?.addOperation(operation1)
+            downloadImageOperationQueue?.addOperation(operation2)
+            downloadImageOperationQueue?.addOperation(operation3)
+        }
+    }
     
 }

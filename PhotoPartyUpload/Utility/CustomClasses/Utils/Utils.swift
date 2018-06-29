@@ -163,4 +163,15 @@ class Utils
             }
     }
     
+    
+    func removeFileStamp( fileName : String) -> String?
+    {
+        let fileNameWithoutExtension = (fileName as NSString).deletingPathExtension
+        
+        let index2 = fileNameWithoutExtension.range(of: "#", options: .backwards)?.lowerBound
+        
+        let name = String(fileNameWithoutExtension[..<index2!])
+        
+        return name
+    }
 }

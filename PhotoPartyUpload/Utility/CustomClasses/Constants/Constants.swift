@@ -59,6 +59,7 @@ struct Constant {
     struct Urls
     {
         static let getListUrl = "%@/List?folder=folder1"
+        static let downloadImage = "%@/DownloadImage?eventid=%@&name=%@&resolution=%d"
     }
     
     struct XMLTag
