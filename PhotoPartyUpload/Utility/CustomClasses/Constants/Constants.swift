@@ -52,8 +52,18 @@ struct Constant {
     }
     
     struct FolderName {
-       static let userSetting = "UserSettings"
+        static let userSetting = "UserSettings"
         static let userSettingPList = "UserSettings.plist"
-
+    }
+    
+    struct Urls
+    {
+        static let getListUrl = "%@/List?folder=folder1"
+    }
+    
+    struct XMLTag
+    {
+        static let arrayOfString = "ArrayOfstring"
+        static let string = "string"
     }
 }

@@ -41,6 +41,9 @@
 		26909FBF20CFE16300EFCC8F /* connection_search0020.png in Resources */ = {isa = PBXBuildFile; fileRef = 26909FA820CFE16200EFCC8F /* connection_search0020.png */; };
 		26909FC020CFE16300EFCC8F /* connection_search0021.png in Resources */ = {isa = PBXBuildFile; fileRef = 26909FA920CFE16200EFCC8F /* connection_search0021.png */; };
 		26909FC120CFE16300EFCC8F /* connection_search0022.png in Resources */ = {isa = PBXBuildFile; fileRef = 26909FAA20CFE16200EFCC8F /* connection_search0022.png */; };
+		26A7450320E60BC500C11B4A /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A7450220E60BC500C11B4A /* DownloadManager.swift */; };
+		26A7450620E6179A00C11B4A /* GetImageListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A7450520E6179A00C11B4A /* GetImageListParser.swift */; };
+		26A7450920E61B1600C11B4A /* PartyImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A7450820E61B1600C11B4A /* PartyImageModel.swift */; };
 		26B33DA6207F682B004CA8BD /* HelperDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B33DA5207F682B004CA8BD /* HelperDetector.swift */; };
 		26B33DA9207F7251004CA8BD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B33DA8207F7251004CA8BD /* Utils.swift */; };
 		26B33DAC207F77D4004CA8BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B33DAB207F77D4004CA8BD /* Constants.swift */; };
@@ -86,6 +89,9 @@
 		26909FA820CFE16200EFCC8F /* connection_search0020.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connection_search0020.png; sourceTree = "<group>"; };
 		26909FA920CFE16200EFCC8F /* connection_search0021.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connection_search0021.png; sourceTree = "<group>"; };
 		26909FAA20CFE16200EFCC8F /* connection_search0022.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connection_search0022.png; sourceTree = "<group>"; };
+		26A7450220E60BC500C11B4A /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		26A7450520E6179A00C11B4A /* GetImageListParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetImageListParser.swift; sourceTree = "<group>"; };
+		26A7450820E61B1600C11B4A /* PartyImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyImageModel.swift; sourceTree = "<group>"; };
 		26B33DA5207F682B004CA8BD /* HelperDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperDetector.swift; sourceTree = "<group>"; };
 		26B33DA8207F7251004CA8BD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		26B33DAB207F77D4004CA8BD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -109,6 +115,7 @@
 		2637A07A20D0E8CC00AB1FFB /* XMLParser */ = {
 			isa = PBXGroup;
 			children = (
+				26A7450420E6178000C11B4A /* GetImageListParser */,
 				2637A07B20D0E8EB00AB1FFB /* HelperDetectorXMLParser */,
 			);
 			path = XMLParser;
@@ -205,6 +212,7 @@
 		26833088202D753D005D0512 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				26A7450720E61B0100C11B4A /* PartyImageModel */,
 				2638778720DA68BC003A79AC /* UserSettingsModel */,
 				2638837420D122D700D3D9B1 /* HelperListModel */,
 				2638837120D0F92B00D3D9B1 /* HelperModel */,
@@ -301,9 +309,34 @@
 			path = connsearch;
 			sourceTree = "<group>";
 		};
+		26A7450120E60BB100C11B4A /* DownloadManager */ = {
+			isa = PBXGroup;
+			children = (
+				26A7450220E60BC500C11B4A /* DownloadManager.swift */,
+			);
+			path = DownloadManager;
+			sourceTree = "<group>";
+		};
+		26A7450420E6178000C11B4A /* GetImageListParser */ = {
+			isa = PBXGroup;
+			children = (
+				26A7450520E6179A00C11B4A /* GetImageListParser.swift */,
+			);
+			path = GetImageListParser;
+			sourceTree = "<group>";
+		};
+		26A7450720E61B0100C11B4A /* PartyImageModel */ = {
+			isa = PBXGroup;
+			children = (
+				26A7450820E61B1600C11B4A /* PartyImageModel.swift */,
+			);
+			path = PartyImageModel;
+			sourceTree = "<group>";
+		};
 		26B33DA3207F67EF004CA8BD /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
+				26A7450120E60BB100C11B4A /* DownloadManager */,
 				2638778420DA684E003A79AC /* UserSettings */,
 				26B33DAA207F77C7004CA8BD /* Constants */,
 				26B33DA7207F7245004CA8BD /* Utils */,
@@ -484,6 +517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2683309C202D7711005D0512 /* MainViewController.swift in Sources */,
+				26A7450320E60BC500C11B4A /* DownloadManager.swift in Sources */,
 				26D8426A20D8E35100DF9EE7 /* HeleprDetectionOperation.swift in Sources */,
 				26833098202D768A005D0512 /* AppDelegate.swift in Sources */,
 				26833093202D7674005D0512 /* PhotoPartyUpload.xcdatamodeld in Sources */,
@@ -497,6 +531,8 @@
 				26B33DA6207F682B004CA8BD /* HelperDetector.swift in Sources */,
 				26B33DAC207F77D4004CA8BD /* Constants.swift in Sources */,
 				2637A07D20D0E93D00AB1FFB /* HelperDetectorXMLParser.swift in Sources */,
+				26A7450920E61B1600C11B4A /* PartyImageModel.swift in Sources */,
+				26A7450620E6179A00C11B4A /* GetImageListParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

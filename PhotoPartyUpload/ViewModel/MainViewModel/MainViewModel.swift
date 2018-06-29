@@ -19,7 +19,10 @@ class MainViewModel : MainViewProtocol
     
     var showNoHelperFoundAlert : ((MainViewProtocol) -> ())?
     
-     var connectionImageArray = [UIImage]()
+    var connectionImageArray = [UIImage]()
+    
+    var isStartUp = false
+    
     
     var connectionStatus: ConnectionStatus
     {
@@ -29,6 +32,12 @@ class MainViewModel : MainViewProtocol
     }
     
     func startUpThings()
+    {
+        isStartUp = true
+        startHelperDetection()
+    }
+    
+    func startHelperDetection()
     {
         UserSettings.sharedInstance.setUpUserSettings()
         
@@ -42,6 +51,13 @@ class MainViewModel : MainViewProtocol
             HelperDetector.sharedInstance.getHelper { (result) in
                 if result == true
                 {
+                    if self.isStartUp == true
+                    {
+                        self.isStartUp = false
+                        UserDefaults.standard.set(HelperListModel.sharedList.helperList[0].url, forKey: "helperUrl")
+                        DownloadManager.shared.startDownloader()
+                        self.connectionStatus = .active
+                    }
                     self.showChoiceAlert?(self)
                 }
                 else

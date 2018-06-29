@@ -45,6 +45,7 @@ class MainViewController: UIViewController {
                         if result == 1
                         {
                             UserDefaults.standard.set(HelperListModel.sharedList.helperList[0].url, forKey: "helperUrl")
+                             DownloadManager.shared.startDownloader()
                             self.viewModel?.connectionStatus = .active
                         }
                         
