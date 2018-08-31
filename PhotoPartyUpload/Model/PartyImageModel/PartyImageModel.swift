@@ -8,14 +8,14 @@
 
 import Foundation
 
-enum ImageType {
-    case bitMap
+enum ImageType : Int {
+    case bitMap = 0
     case gif
     case panaroma
     case video
 }
 
-struct PartyImageModel
+class PartyImageModel
 {
     let imageName : String
     let imageType : ImageType
@@ -72,7 +72,7 @@ struct PartyImageModel
         return false
     }
     
-    mutating func setIsSelected(isSelected : Bool)
+     func setIsSelected(isSelected : Bool)
     {
         self.isSelected = isSelected
     }

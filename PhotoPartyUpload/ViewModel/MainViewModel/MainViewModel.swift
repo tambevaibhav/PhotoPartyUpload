@@ -19,6 +19,8 @@ class MainViewModel : MainViewProtocol
     
     var showNoHelperFoundAlert : ((MainViewProtocol) -> ())?
     
+    var reloadData: ((MainViewProtocol) -> ())?
+    
     var connectionImageArray = [UIImage]()
     
     var isStartUp = false
@@ -31,10 +33,38 @@ class MainViewModel : MainViewProtocol
         }
     }
     
+    required init(connectionStatus : ConnectionStatus)
+    {
+        self.connectionStatus = connectionStatus
+        
+        for i in 0...22
+        {
+            let imageName = String(format: "connection_search00%02d",i)
+            let path = Bundle.main.path(forResource: imageName, ofType: "png")
+            if let image = UIImage(named: path!)
+            {
+                connectionImageArray.append(image)
+            }
+        }
+    }
+    
+    
     func startUpThings()
     {
         isStartUp = true
+        if createFolders() != true { return }
         startHelperDetection()
+        getImageList()
+    }
+    
+    func getImageList() {
+       let imageArray = RealmManager.sharedInstance.getImages()
+        
+        for image in imageArray {
+            let partyObject = PartyImageModel(imageName: image.imageName)
+            PartyImageModelList.shared.photoPartyModelList.append(partyObject)
+        }
+        self.reloadData?(self)
     }
     
     func startHelperDetection()
@@ -72,18 +102,37 @@ class MainViewModel : MainViewProtocol
         }
     }
     
-    required init(connectionStatus : ConnectionStatus)
+    func createFolders() -> Bool
     {
-        self.connectionStatus = connectionStatus
+        let helperImages = Utils.sharedInstance.getDocumentPath().appendingPathComponent(Constant.FolderName.helperImages)
+        let smallFolderName = helperImages.appendingPathComponent(Constant.FolderName.smallThumb)
+        let mediumFolderName = helperImages.appendingPathComponent(Constant.FolderName.mediumThumb)
+        let largeFolderName = helperImages.appendingPathComponent(Constant.FolderName.largeThumb)
+        
+        var isSmallCreated = true
+        var isMediumCreated = true
+        var isLargeCreated  = true
 
-        for i in 0...22
+        if (Utils.sharedInstance.isFilePresent(url: smallFolderName) == false)
         {
-            let imageName = String(format: "connection_search00%02d",i)
-            let path = Bundle.main.path(forResource: imageName, ofType: "png")
-            if let image = UIImage(named: path!)
-            {
-                connectionImageArray.append(image)
-            }
+            isSmallCreated =  Utils.sharedInstance.createFolder(folderName: smallFolderName)
+        }
+        if Utils.sharedInstance.isFilePresent(url: mediumFolderName) == false
+        {
+            isMediumCreated = Utils.sharedInstance.createFolder(folderName: mediumFolderName)
+        }
+        if Utils.sharedInstance.isFilePresent(url: largeFolderName) == false
+        {
+            isLargeCreated = Utils.sharedInstance.createFolder(folderName: largeFolderName)
+        }
+        
+        if isSmallCreated == true && isMediumCreated == true && isLargeCreated == true
+        {
+            return true
+        }
+        else
+        {
+            return false
         }
     }
 }

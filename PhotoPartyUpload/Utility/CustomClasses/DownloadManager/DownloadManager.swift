@@ -81,46 +81,90 @@ class DownloadManager : NSObject
         
         for imageName in serverImageList!
         {
-            
-            
+            if isDownloaded(name: imageName, folder: Constant.FolderName.smallThumb) == false
+            {
             let operation1 = ImageDownloadOperation(imageName: imageName, resolution: ImageResolution.small) { (result) in
                 if result == true
                 {
-                    print("small operation completed \(imageName)")
+                    print("Small thumbnail downloaded :-  \(imageName)")
+                    self.updateUI(imageName: imageName)
                 }
                 else
                 {
-                    print("failed small operation completed \(imageName)")
-
+                    print("Small thumbnail download failed \(imageName)")
                 }
+                }
+                downloadImageOperationQueue?.addOperation(operation1)
             }
+            
+            if isDownloaded(name: imageName, folder: Constant.FolderName.mediumThumb) == false
+            {
             let operation2 = ImageDownloadOperation(imageName: imageName, resolution: ImageResolution.medium) { (result) in
                 if result == true
                 {
-                    print("medium operation completed \(imageName)")
+                    print("Medium thumbnail downloaded :-  \(imageName)")
+                    self.updateUI(imageName: imageName)
                 }
                 else
                 {
-                    print("failed medium operation completed \(imageName)")
-                    
+                    print("Medium thumbnail download failed :-  \(imageName)")
                 }
             }
+                downloadImageOperationQueue?.addOperation(operation2)
+            }
+           
+            if isDownloaded(name: imageName, folder: Constant.FolderName.largeThumb) == false
+            {
             let operation3 = ImageDownloadOperation(imageName: imageName, resolution: ImageResolution.large) { (result) in
                 if result == true
                 {
-                    print("large operation completed \(imageName)")
+                    print("Large thumbnail downloaded :-  \(imageName)")
+                    self.updateUI(imageName: imageName)
                 }
                 else
                 {
-                    print("failed large operation completed \(imageName)")
-                    
+                    print("Large thumbnail download failed :-  \(imageName)")
                 }
             }
-            
-            downloadImageOperationQueue?.addOperation(operation1)
-            downloadImageOperationQueue?.addOperation(operation2)
             downloadImageOperationQueue?.addOperation(operation3)
+            }
         }
     }
     
+    
+    func checkAllThumbDownloaded(name : String) -> Bool
+    {
+        if isDownloaded(name: name, folder: Constant.FolderName.smallThumb) == true && isDownloaded(name: name, folder: Constant.FolderName.mediumThumb) == true && isDownloaded(name: name, folder: Constant.FolderName.largeThumb) == true {
+            return true
+        }
+        return false
+    }
+    
+    func isDownloaded(name: String, folder: String) -> Bool
+    {
+        let helperImages = Utils.sharedInstance.getDocumentPath().appendingPathComponent(Constant.FolderName.helperImages)
+        let folderName = helperImages.appendingPathComponent(folder)
+        let fileName = folderName.appendingPathComponent(name)
+        
+       return Utils.sharedInstance.isFilePresent(url: fileName)
+    }
+    
+    func updateUI(imageName : String) {
+        if checkAllThumbDownloaded(name: imageName) == true {
+            
+            let imageObj = PartyImageModelList.shared.photoPartyModelList.filter {
+                $0.imageName == imageName
+            }
+            
+            if imageObj.count == 0 {
+            let partyImageModel = PartyImageModel(imageName: imageName)
+           
+            RealmManager.sharedInstance.saveImage(imageName: imageName, imageType: partyImageModel.imageType.rawValue)
+            PartyImageModelList.shared.photoPartyModelList.append(partyImageModel)
+    
+            let notificationName = Notification.Name(Constant.NotificationIdentifier.downloadIdentifier)
+            NotificationCenter.default.post(name: notificationName, object: nil)
+            }
+        }
+    }
 }

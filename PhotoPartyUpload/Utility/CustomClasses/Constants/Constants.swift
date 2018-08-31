@@ -54,6 +54,10 @@ struct Constant {
     struct FolderName {
         static let userSetting = "UserSettings"
         static let userSettingPList = "UserSettings.plist"
+        static let helperImages = "HelperImages"
+        static let smallThumb = "SmallThumb"
+        static let mediumThumb = "MediumThumb"
+        static let largeThumb = "LargeThumb"
     }
     
     struct Urls
@@ -66,5 +70,13 @@ struct Constant {
     {
         static let arrayOfString = "ArrayOfstring"
         static let string = "string"
+    }
+    
+    struct NotificationIdentifier {
+        static let downloadIdentifier = "DownloadNotification"
+    }
+    
+    struct CellIdentifier {
+        static let libraryCellIdentifier = "libabryCell"
     }
 }

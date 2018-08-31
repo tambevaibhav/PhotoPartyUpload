@@ -26,10 +26,10 @@ extension DownloadManager : XMLParserDelegate
         if(elementName == Constant.XMLTag.string)
         {
             newImageList!.append(string)
-            if let originalName = Utils.sharedInstance.removeFileStamp(fileName: string)
-            {
-                serverImageList?.append(originalName)
-            }
+           // if let originalName = Utils.sharedInstance.removeFileStamp(fileName: string)
+            //{
+                serverImageList?.append(string)
+            //}
         }
     }
     

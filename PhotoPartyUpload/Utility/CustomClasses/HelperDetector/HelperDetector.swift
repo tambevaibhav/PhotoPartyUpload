@@ -170,7 +170,7 @@ class HelperDetector : NSObject
                         else
                         {
                             self.failedRequest += 1
-                            if self.helperQueue.operations.count == 0 && self.failedRequest == 255 && self.isHelperFound == false
+                            if self.helperQueue.operations.count == 0 && self.failedRequest == 256 && self.isHelperFound == false
                             {
                                 self.callBack!(false)
                             }
@@ -186,7 +186,7 @@ class HelperDetector : NSObject
     func setHelper()
     {
         helperQueue.cancelAllOperations()
-        Utils.sharedInstance.getBackgroundSession()?.invalidateAndCancel()
+        Network.sharedInstance.helperSession.invalidateAndCancel()
     
         if (HelperListModel.sharedList.helperList.count > 0)
         {

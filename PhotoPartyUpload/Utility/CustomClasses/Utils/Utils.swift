@@ -15,12 +15,8 @@ class Utils
 {
     static let sharedInstance = Utils()
     var alert : UIAlertController?
-    private var backgroundSession : URLSession?
-    
-    private init(){
-        let configuration = URLSessionConfiguration.default
-        self.backgroundSession = URLSession(configuration: configuration)
-    }
+   
+    private init(){ }
     
     func getWiFiAddress() -> String? {
         var address : String?
@@ -56,7 +52,7 @@ class Utils
         return address
     }
     
-    func showSearchAlert(topController : UIViewController, title: String?,messsage : String?, cancelButtonTitle : String)
+    func showSearchAlert(topController : UIViewController?, title: String?,messsage : String?, cancelButtonTitle : String)
     {
         
         func showAlertController()
@@ -65,7 +61,7 @@ class Utils
             alert?.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: {_ in
                 NSLog("Cancel Search")
             }))
-            topController.present(alert!, animated: true, completion: nil)
+            topController?.present(alert!, animated: true, completion: nil)
         }
         
         
@@ -80,8 +76,6 @@ class Utils
         {
             showAlertController()
         }
-        
-        
     }
     
     
@@ -94,7 +88,7 @@ class Utils
     }
     
     
-    func showAdminChoice(helperName : String, topController : UIViewController, callBack :@escaping alertCompletionBlock)
+    func showAdminChoice(helperName : String, topController : UIViewController?, callBack :@escaping alertCompletionBlock)
     {
         
         func showAlertViewController()
@@ -118,7 +112,7 @@ class Utils
                 callBack(3)
             }))
             
-            topController.present(alert!, animated: true, completion: nil)
+            topController?.present(alert!, animated: true, completion: nil)
         }
         
         
@@ -132,15 +126,6 @@ class Utils
         else
         {
             showAlertViewController()
-        }
-    }
-    
-    func getBackgroundSession() -> URLSession? {
-        if self.backgroundSession != nil
-        { return self.backgroundSession }
-        else
-        {
-            return nil
         }
     }
     
@@ -173,5 +158,34 @@ class Utils
         let name = String(fileNameWithoutExtension[..<index2!])
         
         return name
+    }
+    
+    
+    func getThumbnail(imageName : String , resolution : ImageResolution) -> Data? {
+        let helperImages = self.getDocumentPath().appendingPathComponent(Constant.FolderName.helperImages)
+        let folderName = helperImages.appendingPathComponent(self.getFolderName(resolution: resolution))
+        let fileUrl = folderName.appendingPathComponent(imageName)
+        
+        do {
+            let imageData = try Data(contentsOf: fileUrl)
+            return imageData
+        }
+        catch let error {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+
+    func getFolderName( resolution : ImageResolution) -> String
+    {
+        switch resolution
+        {
+        case .small:
+            return Constant.FolderName.smallThumb
+        case .medium:
+            return Constant.FolderName.mediumThumb
+        case .large:
+            return Constant.FolderName.largeThumb
+        }
     }
 }

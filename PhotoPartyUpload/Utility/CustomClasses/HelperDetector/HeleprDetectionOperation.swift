@@ -24,9 +24,7 @@ class HeleprDetectionOperation: Operation
     override func main()
     {
         
-        guard let session = Utils.sharedInstance.getBackgroundSession() else {
-            return
-        }
+        let session = Network.sharedInstance.helperSession
         let task = session.dataTask(with: url!) { (data, response, error) in
             
 

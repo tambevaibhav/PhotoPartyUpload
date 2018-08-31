@@ -35,16 +35,36 @@ class ImageDownloadOperation : Operation
         guard let escapedString = imageName?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
             let downloadUrl = String(format: Constant.Urls.downloadImage, helperUrl,"",escapedString,resolution!.rawValue)
         
-        let task = URLSession.shared.downloadTask(with: URL(string: downloadUrl)!) { (locationUrl, response, error) in
-            if error == nil
-            {
+        let task  = Network.sharedInstance.downloadSession.downloadTask(with: URL(string: downloadUrl)!) { (locatioUrl, response, error) in
+            if let imageUrl = locatioUrl {
+                self.saveImage(imageUrl: imageUrl)
                 self.completion!(true)
             }
-            else
-            {
+            else {
                 self.completion!(false)
             }
         }
         task.resume()
+        
+        
     }
+    
+    
+    func saveImage(imageUrl : URL)
+    {
+        let helperImages = Utils.sharedInstance.getDocumentPath().appendingPathComponent(Constant.FolderName.helperImages)
+        let folderName = helperImages.appendingPathComponent(Utils.sharedInstance.getFolderName(resolution: self.resolution!))
+        let fileUrl = folderName.appendingPathComponent(self.imageName!)
+        do
+        {
+            let imageData = try Data(contentsOf: imageUrl)
+            try imageData.write(to: fileUrl)
+            
+        }catch let error
+        {
+            print(error.localizedDescription)
+            self.completion!(false)
+        }
+    }
+    
 }

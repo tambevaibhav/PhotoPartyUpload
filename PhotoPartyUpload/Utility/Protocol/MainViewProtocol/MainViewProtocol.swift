@@ -25,6 +25,7 @@ protocol MainViewProtocol
     var statusDidChange: ((MainViewProtocol) -> ())? { get set }
     var showSearchAlert: ((MainViewProtocol) -> ())? { get set }
     var showChoiceAlert: ((MainViewProtocol) -> ())? { get set }
+    var reloadData: ((MainViewProtocol) -> ())? { get set }
     var showNoHelperFoundAlert: ((MainViewProtocol) -> ())? { get set }
     var connectionImageArray : [UIImage] {get set}
     func startUpThings()
