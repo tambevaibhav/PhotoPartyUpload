@@ -12,15 +12,24 @@ import FLAnimatedImage
 class LibraryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var selectedImageView: FLAnimatedImageView!
     
-    func updateCell(imageDto : PartyImageModel) {
+    func updateCell(imageDto : PartyImageModel, viewMode : ViewMode) {
     
-        guard let imageData = Utils.sharedInstance.getThumbnail(imageName: imageDto.imageName, resolution: .small) else { return }
+        var imageData : Data?
+        switch  viewMode {
+        case .library:
+           imageData = Utils.sharedInstance.getThumbnail(imageName: imageDto.imageName, resolution: .small)
 
+        case .slide:
+           imageData = Utils.sharedInstance.getThumbnail(imageName: imageDto.imageName, resolution: .large)
+        }
+        
+        if let imageData = imageData {
         if imageDto.imageType == .gif {
             selectedImageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
         }
         else {
             selectedImageView.image = UIImage(data: imageData)
+        }
         }
     }
 }

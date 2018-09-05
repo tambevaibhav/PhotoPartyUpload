@@ -26,16 +26,22 @@ class MainViewModel : MainViewProtocol
     var isStartUp = false
     
     
-    var connectionStatus: ConnectionStatus
-    {
+    var connectionStatus: ConnectionStatus {
         didSet {
             self.statusDidChange?(self)
         }
     }
     
-    required init(connectionStatus : ConnectionStatus)
+    var viewMode: ViewMode {
+        didSet {
+            self.reloadData?(self)
+        }
+    }
+    
+    required init(connectionStatus : ConnectionStatus,viewMode : ViewMode)
     {
         self.connectionStatus = connectionStatus
+        self.viewMode = viewMode
         
         for i in 0...22
         {

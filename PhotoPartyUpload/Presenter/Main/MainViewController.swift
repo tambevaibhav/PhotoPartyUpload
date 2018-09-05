@@ -13,6 +13,8 @@ class MainViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var albumView: UIView!
+    
+    @IBOutlet weak var viewModeButton: UIButton!
     @IBOutlet weak var albumTitleImageView: UIImageView!
     @IBOutlet weak var albumTitleLabel: UILabel!
     @IBOutlet weak var thumbnailBackView: UIView!
@@ -70,7 +72,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.viewModel = MainViewModel(connectionStatus: .off)
+        self.viewModel = MainViewModel(connectionStatus: .off, viewMode : .slide)
         addNotifications()
         setUpUI()
         // Do any additional setup after loading the view.
@@ -120,8 +122,14 @@ class MainViewController: UIViewController {
     
     @objc func updateUI(notification: NSNotification?){
         DispatchQueue.main.async {
-            let count  = (PartyImageModelList.shared.photoPartyModelList.count / 9)
-            self.pageCount  = (PartyImageModelList.shared.photoPartyModelList.count % 9) > 0 ? count + 1 : count
+            if self.viewModel?.viewMode == .slide {
+               self.pageCount = PartyImageModelList.shared.photoPartyModelList.count
+            }
+            else {
+                let count  = (PartyImageModelList.shared.photoPartyModelList.count / 9)
+                self.pageCount  = (PartyImageModelList.shared.photoPartyModelList.count % 9) > 0 ? count + 1 : count
+            }
+           
             self.pageSlider.minimumValue = 0.0
             self.pageSlider.maximumValue = Float(self.pageCount - 1)
             self.mainCollectionView.reloadData()
@@ -151,7 +159,16 @@ class MainViewController: UIViewController {
 
        // MARK: Button Actions
     @IBAction func viewModeButtonAction(_ sender: Any) {
-        
+        if let viewMode = self.viewModel?.viewMode {
+        switch viewMode {
+        case .library:
+            viewModeButton.setImage(#imageLiteral(resourceName: "LibraryView"), for: .normal)
+            self.viewModel?.viewMode = .slide
+        case .slide:
+            viewModeButton.setImage(#imageLiteral(resourceName: "SlideView"), for: .normal)
+            self.viewModel?.viewMode = .library
+        }
+        }
     }
     
     @IBAction func sliderValueChangeAction(_ sender: Any) {

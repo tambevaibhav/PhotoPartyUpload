@@ -17,10 +17,16 @@ enum ConnectionStatus
     case searching
 }
 
+enum ViewMode {
+    case slide
+    case library
+}
+
 protocol MainViewProtocol
 {
     
-    init(connectionStatus : ConnectionStatus) 
+    init(connectionStatus : ConnectionStatus , viewMode: ViewMode)
+    var viewMode : ViewMode {get set}
     var connectionStatus : ConnectionStatus {get set}
     var statusDidChange: ((MainViewProtocol) -> ())? { get set }
     var showSearchAlert: ((MainViewProtocol) -> ())? { get set }

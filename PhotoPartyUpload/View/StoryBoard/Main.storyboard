@@ -275,6 +275,7 @@
                         <outlet property="mainCollectionView" destination="QxN-Dk-yuF" id="3AI-RI-bu9"/>
                         <outlet property="pageSlider" destination="jcy-GJ-w4y" id="zLv-V3-ac8"/>
                         <outlet property="thumbnailBackView" destination="mgd-Og-JCL" id="7UC-xc-TPf"/>
+                        <outlet property="viewModeButton" destination="IwC-Ft-YaC" id="9T0-n7-twJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCm-SY-M0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>

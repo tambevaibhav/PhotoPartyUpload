@@ -16,12 +16,12 @@ extension MainViewController : UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.CellIdentifier.libraryCellIdentifier, for: indexPath) as? LibraryCollectionViewCell
-        if let cell = cell {
-            cell.updateCell(imageDto: PartyImageModelList.shared.photoPartyModelList[indexPath.row])
-            return cell
-        }
         
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.CellIdentifier.libraryCellIdentifier, for: indexPath) as? LibraryCollectionViewCell
+            if let cell = cell {
+                cell.updateCell(imageDto: PartyImageModelList.shared.photoPartyModelList[indexPath.row], viewMode: self.viewModel!.viewMode)
+                return cell
+            }
         return UICollectionViewCell()
     }
 }
@@ -29,8 +29,15 @@ extension MainViewController : UICollectionViewDataSource {
 extension MainViewController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: collectionView.frame.size.width/3, height: collectionView.frame.size.height/3)
+          if let viewMode = self.viewModel?.viewMode {
+            switch viewMode {
+            case .library :
+                return CGSize(width: collectionView.frame.size.width/3, height: collectionView.frame.size.height/3)
+            case .slide :
+                return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
+            }
+        }
+        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
     }
     
 }
@@ -78,7 +85,10 @@ extension MainViewController : UIScrollViewDelegate {
             
         } else {
             // This is a much better way to scroll to a cell:
-            let row = (indexOfMajorCell * 9) + 1
+            var row = indexOfMajorCell
+            if self.viewModel?.viewMode == .library {
+                 row = (indexOfMajorCell * 9) + 1
+            }
             let indexPath = IndexPath(row: row, section: 0)
             collectionViewLayout.collectionView!.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
