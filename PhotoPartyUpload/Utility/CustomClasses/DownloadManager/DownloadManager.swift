@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias downloadCompletionBlock = (ConnectionStatus) -> Void
+
 class DownloadManager : NSObject
 {
     static let shared = DownloadManager()
@@ -19,17 +21,17 @@ class DownloadManager : NSObject
      var elementName : String?
      var downloadImageOperationQueue : OperationQueue?
      var downloadVideoOperationQueue : OperationQueue?
-
+    var completion : downloadCompletionBlock?
    
        // MARK: - Private Constructor
-    private override init()
-    {
+    private override init() {
         
     }
    
        // MARK: - Timer Methods
-    func startDownloader()
+    func startDownloader(completion : @escaping downloadCompletionBlock)
     {
+        self.completion = completion
       DispatchQueue.main.async
     {
         if self.downloadTimer != nil
@@ -76,6 +78,10 @@ class DownloadManager : NSObject
     
     func downloadThumbnails()
     {
+        if serverImageList?.count == PartyImageModelList.shared.photoPartyModelList.count {
+              self.completion!(.on)
+        }
+    
         downloadImageOperationQueue = OperationQueue()
         downloadImageOperationQueue?.name = "ImageDownload"
         

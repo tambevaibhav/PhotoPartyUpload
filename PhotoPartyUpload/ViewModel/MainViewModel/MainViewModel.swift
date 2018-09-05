@@ -84,9 +84,6 @@ class MainViewModel : MainViewProtocol
                     if self.isStartUp == true
                     {
                         self.isStartUp = false
-                        UserDefaults.standard.set(HelperListModel.sharedList.helperList[0].url, forKey: "helperUrl")
-                        DownloadManager.shared.startDownloader()
-                        self.connectionStatus = .active
                     }
                     self.showChoiceAlert?(self)
                 }
@@ -101,6 +98,16 @@ class MainViewModel : MainViewProtocol
             NSLog("Manual Search")
         }
     }
+    
+    func startDownloadManager() {
+        UserDefaults.standard.set(HelperListModel.sharedList.helperList[0].url, forKey: "helperUrl")
+        DownloadManager.shared.startDownloader { (status) in
+            self.connectionStatus = status
+        }
+        self.connectionStatus = .active
+    }
+    
+    
     
     func createFolders() -> Bool
     {

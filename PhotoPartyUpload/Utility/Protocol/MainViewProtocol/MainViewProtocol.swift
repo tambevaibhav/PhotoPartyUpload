@@ -29,5 +29,5 @@ protocol MainViewProtocol
     var showNoHelperFoundAlert: ((MainViewProtocol) -> ())? { get set }
     var connectionImageArray : [UIImage] {get set}
     func startUpThings()
-    
+    func startDownloadManager()
 }

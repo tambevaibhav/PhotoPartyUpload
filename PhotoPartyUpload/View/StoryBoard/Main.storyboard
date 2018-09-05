@@ -215,6 +215,9 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="400" id="96Y-b6-gPq"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="sliderValueChangeAction:" destination="HAb-jl-naR" eventType="valueChanged" id="Dg7-W7-C3t"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -267,8 +270,10 @@
                         <outlet property="albumViewWidthConstraint" destination="P14-vu-Fph" id="Ze1-76-q7j"/>
                         <outlet property="backgroundImageView" destination="kh0-jy-lxQ" id="H7h-5m-MNP"/>
                         <outlet property="brandingImageView" destination="Xu0-gb-SBz" id="Zt7-9R-zKV"/>
+                        <outlet property="collectionViewLayout" destination="hde-kg-BSl" id="eUy-QA-t5T"/>
                         <outlet property="connectionImageView" destination="JPx-aX-bAe" id="SCu-YF-2aE"/>
                         <outlet property="mainCollectionView" destination="QxN-Dk-yuF" id="3AI-RI-bu9"/>
+                        <outlet property="pageSlider" destination="jcy-GJ-w4y" id="zLv-V3-ac8"/>
                         <outlet property="thumbnailBackView" destination="mgd-Og-JCL" id="7UC-xc-TPf"/>
                     </connections>
                 </viewController>

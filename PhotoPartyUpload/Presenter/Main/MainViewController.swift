@@ -19,18 +19,21 @@ class MainViewController: UIViewController {
     @IBOutlet weak var brandingImageView: UIImageView!
     @IBOutlet weak var connectionImageView: UIImageView!
     @IBOutlet weak var mainCollectionView: UICollectionView!
+    @IBOutlet weak var pageSlider: UISlider!
     @IBOutlet weak var albumViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var albumTitleViewHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var collectionViewLayout: UICollectionViewFlowLayout!
+    var indexOfCellBeforeDragging = 0
+    var pageCount = 0
+    var currentPage = 0
    // MARK: - View Model
     
     var viewModel : MainViewProtocol? {
         didSet{
             
             self.viewModel?.reloadData = {[weak self] viewModel in
-                OperationQueue.main.addOperation {
-                    self?.mainCollectionView.reloadData()
-                }
+                    self?.updateUI(notification: nil)
             }
             
             self.viewModel!.statusDidChange = {[weak self] viewModel in
@@ -54,11 +57,8 @@ class MainViewController: UIViewController {
                         result in
                         if result == 1
                         {
-                            UserDefaults.standard.set(HelperListModel.sharedList.helperList[0].url, forKey: "helperUrl")
-                             DownloadManager.shared.startDownloader()
-                            self?.viewModel?.connectionStatus = .active
+                            self?.viewModel?.startDownloadManager()
                         }
-                        
                     })
                 }
             }
@@ -81,6 +81,11 @@ class MainViewController: UIViewController {
         self.viewModel?.startUpThings()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureCollectionViewLayoutItemSize()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -104,6 +109,7 @@ class MainViewController: UIViewController {
         albumViewWidthConstraint.constant = 20
         albumTitleViewHeightConstraint.constant = 0
         }
+        collectionViewLayout.minimumLineSpacing = 0
     }
     
     func addNotifications() {
@@ -112,9 +118,13 @@ class MainViewController: UIViewController {
     }
     
     
-    @objc func updateUI(notification: NSNotification){
+    @objc func updateUI(notification: NSNotification?){
         DispatchQueue.main.async {
-                self.mainCollectionView.reloadData()
+            let count  = (PartyImageModelList.shared.photoPartyModelList.count / 9)
+            self.pageCount  = (PartyImageModelList.shared.photoPartyModelList.count % 9) > 0 ? count + 1 : count
+            self.pageSlider.minimumValue = 0.0
+            self.pageSlider.maximumValue = Float(self.pageCount - 1)
+            self.mainCollectionView.reloadData()
         }
     }
     
@@ -140,8 +150,14 @@ class MainViewController: UIViewController {
     }
 
        // MARK: Button Actions
-    @IBAction func viewModeButtonAction(_ sender: Any)
-    {
+    @IBAction func viewModeButtonAction(_ sender: Any) {
         
     }
+    
+    @IBAction func sliderValueChangeAction(_ sender: Any) {
+        guard let slider = sender as? UISlider else { return }
+        currentPage = Int(slider.value)
+        slideToCurrentPage()
+    }
+    
 }
