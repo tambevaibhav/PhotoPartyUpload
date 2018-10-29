@@ -32,37 +32,36 @@ class PartyImageModel
     {
         let gifExtension = "gif"
         
-        let fileExtension = (imageName as NSString).lastPathComponent.lowercased()
-        
-        let isVideo = PartyImageModel.isVideoFile(fileName: imageName)
+        let fileExtension = imageName.components(separatedBy: ".")
+        if fileExtension.count > 0 {
+        let isVideo = PartyImageModel.isVideoFile(fileExtension: fileExtension.last!)
         
         if isVideo == true
         {
             return ImageType.video
         }
-        else if(fileExtension == gifExtension)
+        else if(fileExtension.last == gifExtension)
         {
             return ImageType.gif
         }
-        else
+        else if(fileExtension.count > 2)
         {
-            let fileNameWithoutExtension = (imageName as NSString).deletingPathExtension
-            
-            let index2 = fileNameWithoutExtension.range(of: ".", options: .backwards)?.lowerBound
-            
-            if let substring3 = index2.map(fileNameWithoutExtension.substring(to:))
-            {
-                return ImageType.panaroma
+            if let secondExtension = fileExtension[fileExtension.count - 2] as String? {
+                let extensionWithoutHash = secondExtension.components(separatedBy: "#")
+                if let panaromaExtension = extensionWithoutHash.first {
+                    if panaromaExtension == "3603d" || panaromaExtension == "360" {
+                        return ImageType.panaroma
+                        }
+                    }
+                }
             }
         }
-        
         return ImageType.bitMap
     }
     
-    static func isVideoFile(fileName : String) -> Bool
+    static func isVideoFile(fileExtension : String) -> Bool
     {
         let videoExtentions = ["MOV", "AVI", "MP4", "3GP", "FLV", "M4V", "MKV", "MPEG", "MPG"]
-        let fileExtension = (fileName as NSString).lastPathComponent.lowercased()
 
         if videoExtentions.contains(where: {$0.caseInsensitiveCompare(fileExtension) == .orderedSame}) {
             print(true)  // true

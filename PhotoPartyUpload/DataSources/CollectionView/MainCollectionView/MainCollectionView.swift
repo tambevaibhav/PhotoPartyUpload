@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// MARK:- CollectionView Data Source
 extension MainViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -26,6 +27,17 @@ extension MainViewController : UICollectionViewDataSource {
     }
 }
 
+extension MainViewController : UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if self.viewModel?.viewMode == .library {
+            currentPage = indexPath.item
+            self.viewModel?.viewMode = .slide
+            isViewModeChange = true
+        }
+    }
+}
+
+// MARK:- CollectionView FlowLayout Delegates
 extension MainViewController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -42,7 +54,7 @@ extension MainViewController : UICollectionViewDelegateFlowLayout {
     
 }
 
-
+// MARK:- ScrollView Delegates
 extension MainViewController : UIScrollViewDelegate {
     
     private func indexOfMajorCell() -> Int {
@@ -102,24 +114,22 @@ extension MainViewController : UIScrollViewDelegate {
         }
     }
     
-    
     func setSliderValue() {
-    var pos = Float(currentPage) / 1.0
-        if (pos < pageSlider.minimumValue) {
-            pos = pageSlider.minimumValue
-        }
-        else if (pos > pageSlider.maximumValue) {
-            pos = pageSlider.maximumValue
-        }
-        pageSlider.setValue(pos, animated: true)
+            var pos = Float(currentPage) / 1.0
+            if (pos < pageSlider.minimumValue) {
+                    pos = pageSlider.minimumValue
+            }
+            else if (pos > pageSlider.maximumValue) {
+                    pos = pageSlider.maximumValue
+            }
+                pageSlider.setValue(pos, animated: true)
     }
     
     func configureCollectionViewLayoutItemSize() {
-
         collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         collectionViewLayout.itemSize = CGSize(width: collectionViewLayout.collectionView!.frame.size.width, height: collectionViewLayout.collectionView!.frame.size.height)
     }
-    
-    
 }
+
+

@@ -15,6 +15,7 @@
 		2638778920DA68CF003A79AC /* UserSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2638778820DA68CF003A79AC /* UserSettingsModel.swift */; };
 		2638837320D0F93C00D3D9B1 /* HelperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2638837220D0F93C00D3D9B1 /* HelperModel.swift */; };
 		2638837620D1230D00D3D9B1 /* HelperListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2638837520D1230D00D3D9B1 /* HelperListModel.swift */; };
+		26531922218087D900823D6F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26531921218087D900823D6F /* SettingsViewController.swift */; };
 		266A58592139194700FEC89F /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A58582139194700FEC89F /* RealmManager.swift */; };
 		26833090202D7665005D0512 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2683308F202D7665005D0512 /* Main.storyboard */; };
 		26833095202D767C005D0512 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26833094202D767C005D0512 /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		2638778820DA68CF003A79AC /* UserSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsModel.swift; sourceTree = "<group>"; };
 		2638837220D0F93C00D3D9B1 /* HelperModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperModel.swift; sourceTree = "<group>"; };
 		2638837520D1230D00D3D9B1 /* HelperListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperListModel.swift; sourceTree = "<group>"; };
+		26531921218087D900823D6F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		266A58582139194700FEC89F /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		267C4B6220298BF30057CEF8 /* PhotoPartyUpload.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoPartyUpload.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2683308F202D7665005D0512 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -185,6 +187,14 @@
 			path = HelperListModel;
 			sourceTree = "<group>";
 		};
+		2653191E2180863200823D6F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				26531921218087D900823D6F /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		266A58572139192600FEC89F /* RealmManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +242,7 @@
 		26833086202D7517005D0512 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				2653191E2180863200823D6F /* Settings */,
 				2683309A202D76BC005D0512 /* Main */,
 			);
 			path = Presenter;
@@ -672,6 +683,7 @@
 				268A5AF42138154F0058371E /* PartyImageModelList.swift in Sources */,
 				26A7450920E61B1600C11B4A /* PartyImageModel.swift in Sources */,
 				26A7450620E6179A00C11B4A /* GetImageListParser.swift in Sources */,
+				26531922218087D900823D6F /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

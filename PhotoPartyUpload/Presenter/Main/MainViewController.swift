@@ -29,13 +29,20 @@ class MainViewController: UIViewController {
     var indexOfCellBeforeDragging = 0
     var pageCount = 0
     var currentPage = 0
+    var tapRec : UITapGestureRecognizer?
+    var isViewModeChange : Bool = true
    // MARK: - View Model
     
     var viewModel : MainViewProtocol? {
         didSet{
             
             self.viewModel?.reloadData = {[weak self] viewModel in
-                    self?.updateUI(notification: nil)
+                do {
+                  try  self?.updateUI(notification: nil)
+                }
+                catch let error {
+                    print(error.localizedDescription)
+                }
             }
             
             self.viewModel!.statusDidChange = {[weak self] viewModel in
@@ -57,9 +64,11 @@ class MainViewController: UIViewController {
                 {
                     Utils.sharedInstance.showAdminChoice(helperName: HelperListModel.sharedList.helperList[0].name, topController: self, callBack: {
                         result in
-                        if result == 1
-                        {
+                        if result == 1 {
                             self?.viewModel?.startDownloadManager()
+                        }
+                        else if result == 2 {
+                            self?.performSegue(withIdentifier: "settings", sender: self)
                         }
                     })
                 }
@@ -74,6 +83,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         self.viewModel = MainViewModel(connectionStatus: .off, viewMode : .slide)
         addNotifications()
+        addLongPressGuesture()
         setUpUI()
         // Do any additional setup after loading the view.
     }
@@ -120,19 +130,33 @@ class MainViewController: UIViewController {
     }
     
     
-    @objc func updateUI(notification: NSNotification?){
+    @objc func updateUI(notification: NSNotification?) throws {
         DispatchQueue.main.async {
             if self.viewModel?.viewMode == .slide {
                self.pageCount = PartyImageModelList.shared.photoPartyModelList.count
+                self.addTapGuesture()
             }
             else {
                 let count  = (PartyImageModelList.shared.photoPartyModelList.count / 9)
                 self.pageCount  = (PartyImageModelList.shared.photoPartyModelList.count % 9) > 0 ? count + 1 : count
+                self.removeTapGuesture()
             }
            
             self.pageSlider.minimumValue = 0.0
             self.pageSlider.maximumValue = Float(self.pageCount - 1)
+            //self.mainCollectionView.reloadData()
+        
+        if (PartyImageModelList.shared.photoPartyModelList.count == 1) || self.isViewModeChange == true {
+            self.isViewModeChange = false
             self.mainCollectionView.reloadData()
+        } else if (PartyImageModelList.shared.photoPartyModelList.count > 1)  {
+            self.mainCollectionView.performBatchUpdates({
+                let indexPath = IndexPath(row: PartyImageModelList.shared.photoPartyModelList.count - 1 , section: 0)
+                self.mainCollectionView.insertItems(at: [indexPath])
+
+            }, completion: nil)
+        }
+            self.slideToCurrentPage()
         }
     }
     
@@ -167,7 +191,9 @@ class MainViewController: UIViewController {
         case .slide:
             viewModeButton.setImage(#imageLiteral(resourceName: "SlideView"), for: .normal)
             self.viewModel?.viewMode = .library
-        }
+            currentPage = (currentPage / 9)
+            }
+            isViewModeChange = true
         }
     }
     
@@ -178,3 +204,35 @@ class MainViewController: UIViewController {
     }
     
 }
+ 
+    // MARK: Guesture methods
+ extension MainViewController {
+    
+    func addTapGuesture() {
+            tapRec = UITapGestureRecognizer(target: self, action:  #selector(self.changeViewMode(sender:)))
+            tapRec?.numberOfTapsRequired = 2
+            tapRec?.cancelsTouchesInView = false
+            mainCollectionView.addGestureRecognizer(tapRec!)
+
+    }
+    
+    func addLongPressGuesture() {
+        let longPressGuestutre = UILongPressGestureRecognizer(target: self, action: #selector(self.presentSettingsView(sender:)))
+        //longPressGuestutre.minimumPressDuration = 1.0
+        self.connectionImageView.addGestureRecognizer(longPressGuestutre)
+    }
+    
+    @objc func changeViewMode(sender : UITapGestureRecognizer) {
+        self.viewModeButtonAction(sender)
+    }
+    
+    func removeTapGuesture() {
+        if tapRec != nil {
+            mainCollectionView.removeGestureRecognizer(tapRec!)
+        }
+    }
+    
+    @objc func presentSettingsView(sender : UILongPressGestureRecognizer) {
+        performSegue(withIdentifier: "settings", sender: self)
+    }
+ }
